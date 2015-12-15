@@ -20,14 +20,14 @@ class DeleteEditorVolanteDAO {
 	def deleteContacto(VContacto contacto){
 		SqlParameterSource inparams = new MapSqlParameterSource()
 		.addValue("pa_ContactoID", contacto.contactoId)
-		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE_PG2","SP_DELETE_CONTACTO", inparams, null)
+		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE_PG2","SP_DELETE_CONTACTO", inparams)
 		[codeError:0]
 	}
 	
 	def deleteUbicacion(VUbicacion ubicacion){
 		SqlParameterSource inparams = new MapSqlParameterSource()
 		.addValue("pa_ContactoID", ubicacion.locId)
-		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE_PG2","SP_DELETE_UBICACION", inparams, null)
+		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE_PG2","SP_DELETE_UBICACION", inparams)
 		[codeError:0]
 	}
 

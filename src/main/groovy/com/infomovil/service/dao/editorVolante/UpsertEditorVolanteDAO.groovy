@@ -25,7 +25,7 @@ class UpsertEditorVolanteDAO {
 	def publicaVolante(Long offerId){
 		SqlParameterSource inparams = new MapSqlParameterSource()
 		.addValue("pa_OfferID", offerId )
-		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE","SP_PUBLICA_VOLANTE", inparams, null)
+		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE","SP_PUBLICA_VOLANTE", inparams)
 		[codeError:0]
 	}
 	
@@ -33,7 +33,7 @@ class UpsertEditorVolanteDAO {
 		SqlParameterSource inparams = new MapSqlParameterSource()
 		.addValue("pa_OfferID", offerId )
 		.addValue("pa_Empresa", empresa )
-		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE","SP_UPDATE_EMPRESA", inparams, null)
+		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE","SP_UPDATE_EMPRESA", inparams)
 		[codeError:0]
 	}
 	
@@ -47,7 +47,7 @@ class UpsertEditorVolanteDAO {
 		.addValue("pa_Servicios", contacto.services)
 		.addValue("pa_TipoContacto", contacto.tipoContacto)
 		.addValue("pa_Activo", contacto.activo)
-		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE","SP_UPSERT_CONTACTO", inparams, null)
+		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE","SP_UPSERT_CONTACTO", inparams)
 		[codeError:0]
 	}
 	
@@ -58,7 +58,7 @@ class UpsertEditorVolanteDAO {
 		.addValue("pa_Latitude", ubicacion.latitude)
 		.addValue("pa_Longitude", ubicacion.longitude)
 		.addValue("pa_Direccion", ubicacion.direccion)
-		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE","SP_UPSERT_UBICACION", inparams, null)
+		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE","SP_UPSERT_UBICACION", inparams)
 		[codeError:0]
 	}
 	
