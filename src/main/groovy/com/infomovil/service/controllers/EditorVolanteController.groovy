@@ -6,48 +6,80 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment
 import org.springframework.http.*
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.CrossOrigin
-import com.infomovil.service.dao.EditorVolanteDAO;
 import com.infomovil.service.dao.GetInfomovilDAO
+import com.infomovil.service.dao.editorVolante.DeleteEditorVolanteDAO;
+import com.infomovil.service.dao.editorVolante.GetEditorVolanteDAO;
+import com.infomovil.service.dao.editorVolante.UpsertEditorVolanteDAO;
 import com.infomovil.service.model.Pais
-import org.springframework.web.bind.annotation.RequestMethod;
+import com.infomovil.service.model.editorVolante.VContacto
+import com.infomovil.service.model.editorVolante.VUbicacion;
+
+import org.springframework.web.bind.annotation.RequestMethod
 import static com.infomovil.service.util.Util.*
 
 @CrossOrigin(maxAge = 3600l)
 @RestController
 @RequestMapping("/api/editorVolante")
-class EditorVolanteController {
+class EditorVolanteController extends InfomovilController {
 	
 	@Autowired
-	private Environment environment;
+	protected Environment environment
 	
 	@Autowired
-	private EditorVolanteDAO editorVolanteDAO
+	protected GetInfomovilDAO getInfomovilDAO
 	
 	@Autowired
-	private GetInfomovilDAO getInfomovilDAO
+	protected UpsertEditorVolanteDAO upsertEditorVolanteDAO
+	
+	@Autowired
+	protected DeleteEditorVolanteDAO deleteEditorVolanteDAO
+	
+	@Autowired
+	protected GetEditorVolanteDAO getEditorVolanteDAO 
 	
 	
-	@RequestMapping(value="getPaises", method = RequestMethod.GET )
-	ResponseEntity<Object> getPaises(String hashUser){
-		
-		if(environment.getActiveProfiles()[0] == "dev"){
-			println "ok dev"
-		}
-		
-		if(okHashUser(hashUser, getInfomovilDAO)){
-			return new ResponseEntity<Object>(editorVolanteDAO.getPaises("%"), HttpStatus.OK)
-		}
-		else{
-			def error = [codeError:-1, msgError:'Credenciales Incorrectas']
-			return new ResponseEntity<Object>(error, HttpStatus.NOT_FOUND)
-		}
+	@RequestMapping(value="getContacto", method = RequestMethod.GET )
+	ResponseEntity<Object> getContacto(Long offerId, String hashUser){
+		return executeDAO(hashUser, getInfomovilDAO, getEditorVolanteDAO.getContacto(offerId))
 	}
 	
-	def upsertContacto(){
-		
+	@RequestMapping(value="getUbicacion", method = RequestMethod.GET )
+	ResponseEntity<Object> getUbicacion(Long offerId, String hashUser){
+		return executeDAO(hashUser, getInfomovilDAO, getEditorVolanteDAO.getUbicacion(offerId))
+	}
+	
+	@RequestMapping(value="publicaVolante", method = RequestMethod.POST )
+	ResponseEntity<Object> publicaVolante(Long offerId, String hashUser){
+		return executeDAO(hashUser, getInfomovilDAO, upsertEditorVolanteDAO.publicaVolante(offerId))
+	}
+	
+	@RequestMapping(value="updateEmpresa", method = RequestMethod.POST )
+	ResponseEntity<Object> updateEmpresa(Long offerId, String empresa, String hashUser){
+		return executeDAO(hashUser, getInfomovilDAO, upsertEditorVolanteDAO.updateEmpresa(offerId,empresa))
+	}
+	
+	@RequestMapping(value="upsertContacto", method=RequestMethod.POST)
+	ResponseEntity<Object> upsertContacto(@RequestBody VContacto contacto){
+		return executeDAO(contacto.hashUser, getInfomovilDAO, upsertEditorVolanteDAO.upsertContacto(contacto))
+	}
+	
+	@RequestMapping(value="upsertUbicacion", method = RequestMethod.POST )
+	ResponseEntity<Object> upsertUbicacion(@RequestBody VUbicacion ubicacion){
+		return executeDAO(ubicacion.hashUser, getInfomovilDAO, upsertEditorVolanteDAO.upsertUbicacion(ubicacion))
+	}
+	
+	@RequestMapping(value="deleteContacto", method = RequestMethod.DELETE )
+	ResponseEntity<Object> deleteContacto(@RequestBody VContacto contacto){
+		return executeDAO(contacto.hashUser, getInfomovilDAO, deleteEditorVolanteDAO.deleteContacto(contacto))
+	}
+	
+	@RequestMapping(value="deleteUbicacion", method = RequestMethod.DELETE )
+	ResponseEntity<Object> deleteUbicacion(@RequestBody VUbicacion ubicacion){
+		return executeDAO(ubicacion.hashUser, getInfomovilDAO, deleteEditorVolanteDAO.deleteUbicacion(ubicacion))
 	}
 	
 	

@@ -23,4 +23,10 @@ class GetInfomovilDAOTest {
 	void testGetLoginConProductos(){
 		println(getInfomovilDAO.getLoginConProductos("docker6@mail.com", encrypt("garbage1")))
 	}
+	
+	@Test
+	void testEncryptCuenta(){
+		String value = encrypt("docker6@mail.com;garbage1")
+		println value
+	}
 }
