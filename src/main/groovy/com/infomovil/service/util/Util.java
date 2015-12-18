@@ -3,6 +3,7 @@ package com.infomovil.service.util;
 import java.security.Key;
 import java.sql.Types;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.crypto.Cipher;
@@ -118,15 +119,31 @@ public class Util {
 		return key;
 	}
 	
-	public static boolean okHashUser(String hashUser, GetInfomovilDAO getInfomovilDAO){
+	/***
+	 * Credenciales desencriptadas
+	 * @param hashUser
+	 * @return
+	 */
+	public static String[] getCredenciales(String hashUser){
 		try{
 			String decode = decrypt(hashUser);
 			String[] credentials = decode.split(";");
-			getInfomovilDAO.getLoginConProductos(credentials[0], encrypt(credentials[1]));
-			return true;
+			return new String[]{credentials[0], encrypt(credentials[1])};
 		}
 		catch(Exception e){
-			return false;
+			return null;
+		}
+	}
+	
+	public static Map<String,Object> okHashUser(String hashUser, GetInfomovilDAO getInfomovilDAO){
+		try{
+			String[] credentials = getCredenciales(hashUser);
+			return getInfomovilDAO.getLoginConProductos(credentials[0], credentials[1]);
+		}
+		catch(Exception e){
+			Map<String,Object> result = new HashMap<String,Object>();
+			result.put("pa_DomainId", 0);
+			return result;
 		}
 	}
 

@@ -10,9 +10,9 @@ class InfomovilController {
 	
 	private static final Logger logger = Logger.getLogger(InfomovilController.class);
 	
-	protected ResponseEntity<Object> executeDAO(String hashUser,GetInfomovilDAO getInfomovilDAO, Map<String,Object> result){
+	protected ResponseEntity<Object> executeService(Long idDominio, Map<String,Object> result){
 		try{
-			if(okHashUser(hashUser, getInfomovilDAO)){
+			if(idDominio>0){
 				return new ResponseEntity<Object>(result, HttpStatus.OK)
 			}
 			else{
@@ -25,7 +25,6 @@ class InfomovilController {
 			def error = [codeError:-1, msgError:e.getMessage()]
 			return new ResponseEntity<Object>(error, HttpStatus.INTERNAL_SERVER_ERROR)
 		}
-		
 	}
 
 }

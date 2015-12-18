@@ -25,7 +25,7 @@ class GetInfomovilDAO {
 	@Autowired
 	protected JdbcTemplate jdbcTemplate
 
-	def getLoginConProductos(String email, String password) throws InfomovilDataException {
+	Map<String,Object> getLoginConProductos(String email, String password) throws InfomovilDataException {
 
 		SqlParameterSource inparams = new MapSqlParameterSource()
 				.addValue("pa_UserName", email)
@@ -57,7 +57,7 @@ class GetInfomovilDAO {
 
 		def resultMap = callStore(TipoErrorBD.PA_MJECODERROR,
 				jdbcTemplate, "PA_INFOGET_PG6",  "SP_GETRESPLOGIN", inparams, cursor,
-				new SqlOutParameter("pa_DomainId", Types.INTEGER),
+				new SqlOutParameter("pa_DomainId", Types.BIGINT),
 				new SqlOutParameter("pa_Campania", Types.VARCHAR),
 				new SqlOutParameter("pa_Patrocinador", Types.VARCHAR),
 				new SqlOutParameter("pa_Version", Types.VARCHAR))

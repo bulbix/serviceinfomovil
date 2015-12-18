@@ -44,42 +44,50 @@ class EditorVolanteController extends InfomovilController {
 	
 	@RequestMapping(value="getContacto", method = RequestMethod.GET )
 	ResponseEntity<Object> getContacto(Long offerId, String hashUser){
-		return executeDAO(hashUser, getInfomovilDAO, getEditorVolanteDAO.getContacto(offerId))
+		def login = okHashUser(hashUser, getInfomovilDAO);
+		return executeService(login.pa_DomainId, getEditorVolanteDAO.getContacto(offerId))
 	}
 	
 	@RequestMapping(value="getUbicacion", method = RequestMethod.GET )
 	ResponseEntity<Object> getUbicacion(Long offerId, String hashUser){
-		return executeDAO(hashUser, getInfomovilDAO, getEditorVolanteDAO.getUbicacion(offerId))
+		def login = okHashUser(hashUser, getInfomovilDAO);
+		return executeService(login.pa_DomainId, getEditorVolanteDAO.getUbicacion(offerId))
 	}
 	
 	@RequestMapping(value="publicaVolante", method = RequestMethod.POST )
 	ResponseEntity<Object> publicaVolante(Long offerId, String hashUser){
-		return executeDAO(hashUser, getInfomovilDAO, upsertEditorVolanteDAO.publicaVolante(offerId))
+		def login = okHashUser(hashUser, getInfomovilDAO);
+		return executeService(login.pa_DomainId, upsertEditorVolanteDAO.publicaVolante(offerId))
 	}
 	
 	@RequestMapping(value="updateEmpresa", method = RequestMethod.POST )
 	ResponseEntity<Object> updateEmpresa(Long offerId, String empresa, String hashUser){
-		return executeDAO(hashUser, getInfomovilDAO, upsertEditorVolanteDAO.updateEmpresa(offerId,empresa))
+		def login = okHashUser(hashUser, getInfomovilDAO);
+		return executeService(login.pa_DomainId, upsertEditorVolanteDAO.updateEmpresa(offerId,empresa))
 	}
 	
 	@RequestMapping(value="upsertContacto", method=RequestMethod.POST)
 	ResponseEntity<Object> upsertContacto(@RequestBody VContacto contacto){
-		return executeDAO(contacto.hashUser, getInfomovilDAO, upsertEditorVolanteDAO.upsertContacto(contacto))
+		def login = okHashUser(contacto.hashUser, getInfomovilDAO);
+		return executeService(login.pa_DomainId, upsertEditorVolanteDAO.upsertContacto(contacto))
 	}
 	
 	@RequestMapping(value="upsertUbicacion", method = RequestMethod.POST )
 	ResponseEntity<Object> upsertUbicacion(@RequestBody VUbicacion ubicacion){
-		return executeDAO(ubicacion.hashUser, getInfomovilDAO, upsertEditorVolanteDAO.upsertUbicacion(ubicacion))
+		def login = okHashUser(ubicacion.hashUser, getInfomovilDAO);
+		return executeService(login.pa_DomainId, upsertEditorVolanteDAO.upsertUbicacion(ubicacion))
 	}
 	
 	@RequestMapping(value="deleteContacto", method = RequestMethod.DELETE )
 	ResponseEntity<Object> deleteContacto(@RequestBody VContacto contacto){
-		return executeDAO(contacto.hashUser, getInfomovilDAO, deleteEditorVolanteDAO.deleteContacto(contacto))
+		def login = okHashUser(contacto.hashUser, getInfomovilDAO);
+		return executeService(login.pa_DomainId, deleteEditorVolanteDAO.deleteContacto(contacto))
 	}
 	
 	@RequestMapping(value="deleteUbicacion", method = RequestMethod.DELETE )
 	ResponseEntity<Object> deleteUbicacion(@RequestBody VUbicacion ubicacion){
-		return executeDAO(ubicacion.hashUser, getInfomovilDAO, deleteEditorVolanteDAO.deleteUbicacion(ubicacion))
+		def login = okHashUser(ubicacion.hashUser, getInfomovilDAO);
+		return executeService(login.pa_DomainId, deleteEditorVolanteDAO.deleteUbicacion(ubicacion))
 	}
 	
 	
