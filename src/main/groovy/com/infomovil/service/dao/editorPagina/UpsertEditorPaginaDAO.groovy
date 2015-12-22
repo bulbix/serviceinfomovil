@@ -1,5 +1,6 @@
 package com.infomovil.service.dao.editorPagina
 
+import com.infomovil.service.model.editorPagina.Contacto
 import com.infomovil.service.model.editorPagina.KeywordData;
 import com.infomovil.service.model.editorPagina.Ubicacion
 import com.infomovil.service.model.editorVolante.VUbicacion
@@ -51,6 +52,34 @@ class UpsertEditorPaginaDAO {
 		.addValue("paKeywordPos", keywordData.keywordPos)
 		
 		callStore(TipoErrorBD.PACODEERROR, jdbcTemplate,"PQ_INFOUPDATE_PG1","SP_UPDATEKEYWORDDATA", inparams)
+		[codeError:0]
+	}
+	
+	def insertContacto(Contacto contacto){
+		SqlParameterSource inparams = new MapSqlParameterSource()
+		.addValue("paDomainId", contacto.idDominio)
+		.addValue("paLongLabelNaptr", contacto.longLabel)
+		.addValue("paRegExp", contacto.regExp)
+		.addValue("paServicesNaptr", contacto.services)
+		.addValue("paSubCategory", contacto.subCategory)
+		.addValue("paVisible", contacto.activo)
+		
+		callStore(TipoErrorBD.PACODEERROR, jdbcTemplate,"PQ_INFOSTORE_PG2","SP_STORERECORDNAPTR", inparams)
+		[codeError:0]
+	}
+	
+	def updateContacto(Contacto contacto){
+		SqlParameterSource inparams = new MapSqlParameterSource()
+		.addValue("pa_Dominio", contacto.idDominio)
+		.addValue("pa_IDContacto", contacto.contactoId)
+		.addValue("pa_Descripcion", contacto.longLabel)
+		.addValue("pa_Preferencia", contacto.preference)
+		.addValue("pa_Contenido", contacto.regExp)
+		.addValue("pa_Servicios", contacto.services)
+		.addValue("pa_SubCategoria", contacto.subCategory)
+		.addValue("pa_Activo", contacto.activo)
+		
+		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_IMAGENES","SP_ACTUALIZA_CONTACTO", inparams)
 		[codeError:0]
 	}
 	

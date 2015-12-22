@@ -15,6 +15,7 @@ import com.infomovil.service.dao.editorPagina.GetEditorPaginaDAO
 import com.infomovil.service.dao.editorPagina.UpsertEditorPaginaDAO
 import com.infomovil.service.dao.editorVolante.DeleteEditorVolanteDAO;
 import com.infomovil.service.dao.editorVolante.GetEditorVolanteDAO
+import com.infomovil.service.model.editorPagina.Contacto
 import com.infomovil.service.model.editorPagina.Ubicacion
 import com.infomovil.service.model.editorVolante.VUbicacion;
 
@@ -39,6 +40,12 @@ class EditorPaginaController extends InfomovilController {
 	
 	@Autowired
 	protected DeleteEditorPaginaService deleteEditorPaginaService
+	
+	@Autowired
+	protected GetEditorPaginaDAO getEditorPaginaDAO
+	
+	@Autowired
+	protected DeleteEditorPaginaDAO deleteEditorPaginaDAO
 
 	
 	@RequestMapping(value="getUbicacion", method = RequestMethod.GET )
@@ -62,6 +69,28 @@ class EditorPaginaController extends InfomovilController {
 		def login = okHashUser(ubicacion.hashUser, getInfomovilDAO)
 		ubicacion.idDominio = login.pa_DomainId
 		return executeService(login.pa_DomainId, deleteEditorPaginaService.deleteUbicacion(credenciales[0], ubicacion))
+	}
+	
+	@RequestMapping(value="getContacto", method = RequestMethod.GET )
+	ResponseEntity<Object> getContacto(String hashUser){
+		def login = okHashUser(hashUser, getInfomovilDAO);
+		return executeService(login.pa_DomainId, getEditorPaginaDAO.getContacto(login.pa_DomainId))
+	}
+	
+	@RequestMapping(value="upsertContacto", method = RequestMethod.POST )
+	ResponseEntity<Object> upsertContacto(@RequestBody Contacto contacto){
+		def credenciales = getCredenciales(contacto.hashUser)
+		def login = okHashUser(contacto.hashUser, getInfomovilDAO);
+		contacto.idDominio = login.pa_DomainId
+		return executeService(login.pa_DomainId, upsertEditorPaginaService.upsertContacto(contacto))
+	}
+	
+	@RequestMapping(value="deleteContacto", method = RequestMethod.DELETE )
+	ResponseEntity<Object> deleteContacto(@RequestBody Contacto contacto){
+		def credenciales = getCredenciales(contacto.hashUser)
+		def login = okHashUser(contacto.hashUser, getInfomovilDAO)
+		contacto.idDominio = login.pa_DomainId
+		return executeService(login.pa_DomainId, deleteEditorPaginaDAO.deleteContacto(contacto))
 	}
 	
 }

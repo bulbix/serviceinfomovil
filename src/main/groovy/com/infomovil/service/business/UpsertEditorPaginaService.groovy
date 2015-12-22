@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 
 import com.infomovil.service.dao.editorPagina.GetEditorPaginaDAO;
 import com.infomovil.service.dao.editorPagina.UpsertEditorPaginaDAO;
+import com.infomovil.service.model.editorPagina.Contacto
 import com.infomovil.service.model.editorPagina.KeywordData
 import com.infomovil.service.model.editorPagina.Ubicacion;
 
@@ -43,7 +44,16 @@ class UpsertEditorPaginaService {
 		}
 		
 		[codeError:0]
-		
 	}
+	
+	def upsertContacto(Contacto contacto){
+		if(!contacto.contactoId){
+			upsertEditorPaginaDAO.insertContacto(contacto)
+		}
+		else{
+			upsertEditorPaginaDAO.updateContacto(contacto)
+		}
+	}
+	
 
 }

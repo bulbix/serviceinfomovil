@@ -1,5 +1,6 @@
 package com.infomovil.service.dao.editorPagina
 
+import com.infomovil.service.model.editorPagina.Contacto
 import com.infomovil.service.model.editorPagina.KeywordData;
 import com.infomovil.service.model.editorPagina.Ubicacion
 import com.infomovil.service.model.editorVolante.VUbicacion
@@ -64,7 +65,7 @@ class GetEditorPaginaDAO {
 		[codeError:0, keywordData:(List<KeywordData>)out.get("paCursor")]
 	}
 	
-	Integer getPriord(int idDominio) {
+	Integer getPriord(Long idDominio) {
 		
 		SqlParameterSource inparams = new MapSqlParameterSource()
 		.addValue("paDomainId", idDominio);
@@ -78,6 +79,32 @@ class GetEditorPaginaDAO {
 		
 		return result;
 	}
+	
+	def getContacto(Long idDominio){
+		SqlParameterSource inparams = new MapSqlParameterSource()
+		.addValue("paDomainId", idDominio)
+	
+		SqlOutParameter  cursor = new SqlOutParameter("curRecorNaptr",
+				OracleTypes.CURSOR,new RowMapper<Contacto>(){
+					@Override
+					public Contacto mapRow(ResultSet rs, int rowNum) throws SQLException {
+						Contacto contacto = new Contacto(
+							contactoId:rs.getLong("id_contacto"),
+							longLabel:rs.getString("long_label"),
+							regExp:rs.getString("reg_exp"),
+							services:rs.getString("services"),
+							subCategory:rs.getString("sub_category"),
+							preference:rs.getInt("preference"),
+							activo:rs.getInt("visible")
+							
+						)
+						return contacto;
+					}});
+	
+	Map<String,Object> out =  callStore(TipoErrorBD.PAMJECODERROR, jdbcTemplate,"PQ_INFOGET_PG2","SP_GETRECORNAPTR", inparams, cursor)
+	
+	[codeError:0, contacto:(List<Contacto>)out.get("curRecorNaptr")]
+}
 	
 	
 

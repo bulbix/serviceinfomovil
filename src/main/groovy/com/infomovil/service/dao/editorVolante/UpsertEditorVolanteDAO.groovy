@@ -21,6 +21,9 @@ class UpsertEditorVolanteDAO {
 	
 	@Autowired
 	protected JdbcTemplate jdbcTemplate
+	
+	@Autowired
+	protected GetEditorVolanteDAO getEditorVolanteDAO;
 
 	def publicaVolante(Long offerId){
 		SqlParameterSource inparams = new MapSqlParameterSource()
@@ -59,7 +62,10 @@ class UpsertEditorVolanteDAO {
 		.addValue("pa_Longitude", ubicacion.longitude)
 		.addValue("pa_Direccion", ubicacion.direccion)
 		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE","SP_UPSERT_UBICACION", inparams)
-		[codeError:0]
+		def mapGetUbicacion = getEditorVolanteDAO.getUbicacion(ubicacion.offerId)
+		
+		
+		[locId:mapGetUbicacion.ubicacion[0].locId, codeError:0]
 	}
 	
 }

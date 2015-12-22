@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.SqlParameterSource
 
+import com.infomovil.service.model.editorPagina.Contacto
 import com.infomovil.service.model.editorPagina.Ubicacion
 import com.infomovil.service.model.editorVolante.VContacto
 import com.infomovil.service.model.editorVolante.VUbicacion
@@ -22,6 +23,15 @@ class DeleteEditorPaginaDAO {
 		SqlParameterSource inparams = new MapSqlParameterSource()
 		.addValue("paDomainId", ubicacion.idDominio)
 		callStore(TipoErrorBD.PACODEERROR, jdbcTemplate,"PQ_INFODELETE_PG2","SP_DELETELOCRECORD", inparams)
+		[codeError:0]
+	}
+	
+	def deleteContacto(Contacto contacto){
+		SqlParameterSource inparams = new MapSqlParameterSource()
+		.addValue("paDomainId", contacto.idDominio)
+		.addValue("paNaptrId", contacto.contactoId)
+		
+		callStore(TipoErrorBD.PACODEERROR, jdbcTemplate,"PQ_INFODELETE_PG2","SP_DELETERECORDNAPTR", inparams)
 		[codeError:0]
 	}
 
