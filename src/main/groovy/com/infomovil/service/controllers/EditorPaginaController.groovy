@@ -24,7 +24,7 @@ import org.springframework.http.*
 import org.springframework.web.bind.annotation.RequestMethod
 import static com.infomovil.service.util.Util.*
 
-@CrossOrigin(maxAge = 3600l)
+@CrossOrigin
 @RestController
 @RequestMapping("/api/editorPagina")
 class EditorPaginaController extends InfomovilController {

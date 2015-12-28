@@ -21,7 +21,7 @@ import com.infomovil.service.model.editorVolante.VUbicacion;
 import org.springframework.web.bind.annotation.RequestMethod
 import static com.infomovil.service.util.Util.*
 
-@CrossOrigin(maxAge = 3600l)
+@CrossOrigin
 @RestController
 @RequestMapping("/api/editorVolante")
 class EditorVolanteController extends InfomovilController {
@@ -52,18 +52,6 @@ class EditorVolanteController extends InfomovilController {
 	ResponseEntity<Object> getUbicacion(Long offerId, String hashUser){
 		def login = okHashUser(hashUser, getInfomovilDAO);
 		return executeService(login.pa_DomainId, getEditorVolanteDAO.getUbicacion(offerId))
-	}
-	
-	@RequestMapping(value="publicaVolante", method = RequestMethod.POST )
-	ResponseEntity<Object> publicaVolante(Long offerId, String hashUser){
-		def login = okHashUser(hashUser, getInfomovilDAO);
-		return executeService(login.pa_DomainId, upsertEditorVolanteDAO.publicaVolante(offerId))
-	}
-	
-	@RequestMapping(value="updateEmpresa", method = RequestMethod.POST )
-	ResponseEntity<Object> updateEmpresa(Long offerId, String empresa, String hashUser){
-		def login = okHashUser(hashUser, getInfomovilDAO);
-		return executeService(login.pa_DomainId, upsertEditorVolanteDAO.updateEmpresa(offerId,empresa))
 	}
 	
 	@RequestMapping(value="upsertContacto", method=RequestMethod.POST)

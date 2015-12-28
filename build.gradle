@@ -35,7 +35,6 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-jdbc")
     compile('org.codehaus.groovy:groovy')
     testCompile('org.springframework.boot:spring-boot-starter-test')
-	//compile("org.springframework.boot:spring-boot-starter-security")
 	compile('com.oracle:ojdbc6:11.2.0') 
 	compile('commons-codec:commons-codec:1.5')
 	providedCompile('javax.servlet:javax.servlet-api')

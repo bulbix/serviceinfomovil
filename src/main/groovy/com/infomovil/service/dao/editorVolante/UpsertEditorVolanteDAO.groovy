@@ -23,22 +23,7 @@ class UpsertEditorVolanteDAO {
 	protected JdbcTemplate jdbcTemplate
 	
 	@Autowired
-	protected GetEditorVolanteDAO getEditorVolanteDAO;
-
-	def publicaVolante(Long offerId){
-		SqlParameterSource inparams = new MapSqlParameterSource()
-		.addValue("pa_OfferID", offerId )
-		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE","SP_PUBLICA_VOLANTE", inparams)
-		[codeError:0]
-	}
-	
-	def updateEmpresa(Long offerId, String empresa){
-		SqlParameterSource inparams = new MapSqlParameterSource()
-		.addValue("pa_OfferID", offerId )
-		.addValue("pa_Empresa", empresa )
-		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_VOLANTE","SP_UPDATE_EMPRESA", inparams)
-		[codeError:0]
-	}
+	protected GetEditorVolanteDAO getEditorVolanteDAO;	
 	
 	def upsertContacto(VContacto contacto){
 		SqlParameterSource inparams = new MapSqlParameterSource()
