@@ -22,8 +22,8 @@ class GetEditorPaginaService {
 		def mapUbicacion = getEditorPaginaDAO.getUbicacion(email)
 		println mapUbicacion
 		def direccion = getEditorPaginaDAO.getKeywordData(email).keywordData.find{it.keywordField == "a1"}
-		println direccion.keywordValue
-		mapUbicacion.ubicacion[0].direccion = direccion.keywordValue
+		println direccion?.keywordValue
+		mapUbicacion.ubicacion[0].direccion = direccion?.keywordValue
 		[codeError:0, ubicacion:mapUbicacion.ubicacion]
 	}
 	
