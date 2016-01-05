@@ -46,6 +46,9 @@ class EditorPaginaController extends InfomovilController {
 	
 	@Autowired
 	protected DeleteEditorPaginaDAO deleteEditorPaginaDAO
+	
+	@Autowired
+	protected UpsertEditorPaginaDAO upsertEditorPaginaDAO
 
 	
 	@RequestMapping(value="getUbicacion", method = RequestMethod.GET )
@@ -91,6 +94,11 @@ class EditorPaginaController extends InfomovilController {
 		def login = okHashUser(contacto.hashUser, getInfomovilDAO)
 		contacto.idDominio = login.pa_DomainId
 		return executeService(login.pa_DomainId, deleteEditorPaginaDAO.deleteContacto(contacto))
+	}
+	
+	@RequestMapping(value="cambiaSubdominio", method = RequestMethod.POST )
+	ResponseEntity<Object> cambiaSubdominio(String email, String subdominio){
+		return executeService(1, upsertEditorPaginaDAO.cambiaSubdominio(email,subdominio))
 	}
 	
 }

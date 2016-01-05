@@ -83,5 +83,15 @@ class UpsertEditorPaginaDAO {
 		[codeError:0]
 	}
 	
+	def cambiaSubdominio(String email, String subdominio){
+		SqlParameterSource inparams = new MapSqlParameterSource()
+		.addValue("pa_UserEmail", email)
+		.addValue("pa_NewSD", subdominio)
+		
+		callStore(TipoErrorBD.PA_CODEERROR, jdbcTemplate,"PA_INFO_UTIL","SP_CAMBIA_SD", inparams)
+		[codeError:0]
+		
+	}
+	
 
 }
